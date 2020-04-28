@@ -87,18 +87,8 @@
             logout() {
                 this.$store.dispatch('auth/logout', {
                     router: this.$router,
-                    method: this.makeToast,
-                    that: this
+                    snotify: this.$snotify
                 });
-
-                /*axios.post('api/auth/logout').then((rep) => {
-                    context.commit('auth/logout');
-                    this.$router.push('/login');
-                })*/
-
-                //this.$store.dispatch('auth/logout');
-                //this.$store.commit('auth/logout');
-                //this.$router.push('/login');
             },
 
             getHeaderRouteLinks() {
@@ -106,14 +96,6 @@
                     return route.name !== 'Dashboard'
                 })
             },
-            makeToast(title, bodyMessage, variant = 'danger', solid = true, toaster = 'b-toaster-top-right') {
-                this.$bvToast.toast(bodyMessage, {
-                    title: title,
-                    variant: variant,
-                    solid: solid,
-                    toaster: toaster
-                })
-            }
         },
         mounted: function() {
             this.getHeaderRouteLinks();

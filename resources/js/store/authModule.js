@@ -6,11 +6,11 @@ export default {
 
     state: {
         //User
-        profileUser: {},
-        currentUser: user,
         isLoggedIn: !!user,
         isLoading: false,
         authError: null,
+        profileUser: {},
+        currentUser: user,
 
         //Roles
         roles: [],
@@ -20,10 +20,7 @@ export default {
     },
 
     getters: {
-        //User
-        profileUser(state) {
-            return state.profileUser;
-        },
+        //Auth
         isLoading(state) {
             return state.isLoading;
         },
@@ -51,13 +48,15 @@ export default {
             return state.currentRole.label ? state.currentRole.label : null;
         },
 
+        //User
+        profileUser(state) {
+            return state.profileUser;
+        },
+
     },
 
     mutations: {
-        //User
-        updateProfileUser(state, payload) {
-            state.profileUser = payload
-        },
+        //Auth
         login(state) {
             state.isLoading = true;
             state.authError = null;
@@ -94,60 +93,37 @@ export default {
         updateCurrentRole(state, payload) {
             state.currentRole = payload
         },
+
+        //User
+        updateProfileUser(state, payload) {
+            state.profileUser = payload
+        },
+
    },
 
     actions: {
-        //User
-        updateProfileUser(context) {
-            axios.get('/api/user')
-                .then((response) => {
-                    context.commit("updateProfileUser", response.data)
-                })
-        },
-        logout(context, {router, method, that}) {
+        //Auth
+        logout(context, {router, snotify}) {
             signout().then((rep) => {
                 context.commit('logout');
                 router.push({ path: '/login' });
-                that.$bvToast.toast(
-                    "Vous avez été déconnecté avec sucès", {
-                        title: "Déconnexion réussie",
-                        variant: "success"
-                    }
-                )
-                console.log(method)
+                snotify.success('Déconnexion réussie');
             }).catch((error) => {
-                that.$bvToast.toast(
-                    "Nous avons rencontré une erreur en essayant de vous déconnecter!",
-                    {
-                        title: "Echec de déconnexion",
-                        variant: "warning"
-                    }
-                )
+                snotify.warning('Echec de déconnexion: Une erreur a été détectée!');
             })
         },
-        login(context, {data, router, method, that}) {
+        login(context, {data, router, snotify}) {
             context.commit("login");
 
             signin(data).then((res) => {
                 context.commit("loginSuccess", res);
                 router.push({ path: '/' });
-
-                that.$bvToast.toast(
-                    "Bienvenue sur la plateforme LmdApp", {
-                        title: "Connexion réussie",
-                        variant: "success"
-                    }
-                )
+                snotify.success('Bienvenue sur la plateforme LmdApp');
             }).catch((error) => {
                 console.log(error)
                 console.log(router)
                 context.commit("loginFailed", { error });
-                that.$bvToast.toast(
-                    "Echec de la connexion", {
-                        title: "Message: " + error,
-                        variant: "danger"
-                    }
-                )
+                snotify.error('Echec de la connexion');
             });
         },
 
@@ -186,6 +162,14 @@ export default {
                         console.log(error)
                     })
             }
+        },
+
+        //User
+        updateProfileUser(context) {
+            axios.get('/api/user')
+                .then((response) => {
+                    context.commit("updateProfileUser", response.data)
+                })
         },
     }
 };

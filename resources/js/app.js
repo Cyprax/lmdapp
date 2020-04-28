@@ -15,7 +15,7 @@ import {
 library.add(
     faInfoCircle
 )
-/*import {
+import {
     faTachometerAlt,
     faBars,
     faUserCircle,
@@ -43,11 +43,11 @@ library.add(
     faMinus
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
-    faTachometerAlt, faBars, faUserCircle, faIdCard, faBell, faInfoCircle, faPowerOff,
+    faTachometerAlt, faBars, faUserCircle, faIdCard, faBell, faPowerOff,
     faChevronCircleLeft, faChevronCircleRight, faRedoAlt, faReplyAll, faEye, faEyeSlash,
     faSearch, faTimes, faTimesCircle, faPlus, faEraser, faPen, faPenAlt,
     faArrowDown, faChevronDown, faDownload, faUpload, faCheck, faMinus
-)*/
+)
 
 import {
     FontAwesomeIcon
@@ -63,6 +63,17 @@ import BootstrapVue from 'bootstrap-vue'
 import "bootstrap/dist/css/bootstrap.css";
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue)
+
+
+//VueSnotify
+import Snotify, { SnotifyPosition } from 'vue-snotify'
+const options = {
+    toast: {
+        position: SnotifyPosition.rightTop
+    }
+}
+Vue.use(Snotify, options)
+
 
 
 //Buefy

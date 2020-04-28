@@ -69,11 +69,11 @@ export default {
     methods: {
         authenticate() {
             //this.loading = true
+            //this.$snotify.success('Auth')
             this.$store.dispatch('auth/login', {
                 data: this.$data.form,
                 router: this.$router,
-                method: this.makeToast,
-                that: this
+                snotify: this.$snotify
             });
 
             /*login(this.$data.form)

@@ -67,7 +67,7 @@ export default {
 
 #nav-header {
     height:3.5rem;
-    background-color: #009688;
+    background-color: #4e73df /*#009688*/;
     color: white;
     width: 100%;
     z-index: 20;
